@@ -12,11 +12,11 @@ Francisca Ariane dos Santos da Silva, 554930 - Engenharia da Computação
 Desenvolver um aplicativo mobile utilizando Kotlin e Jetpack Compose que auxilie usuários a planejar e organizar visitas à Guaramiranga, integrando informações sobre pontos turísticos, clima e localização, com foco em uma experiência intuitiva uso de persistência de dados local, consumo de API externa e aplicação de boas práticas de arquitetura e design de interfaces.
 
 ## :eyes: Público-Alvo
-O público-alvo do aplicativo são turistas, visitantes ocasionais e moradores que desejam explorar melhor Guaramiranga. Inclui principalmente jovens e aduktos a organizar roteiros de forma prática, além de pessoas interessadas em natureza, gastronomia local e experiências ao ar livre.
+O público-alvo do aplicativo são turistas, visitantes ocasionais e moradores que desejam explorar melhor Guaramiranga. Inclui principalmente jovens e adultos a organizar roteiros de forma prática, além de pessoas interessadas em natureza, gastronomia local e experiências ao ar livre.
 
 ## :star2: Impacto Esperado
-O app busca facilitar o planejamento de visitas, tornanndo a experiência do público mais prática, organizada e agradável. Com o app, os usuários conseguem descobrir novos lugares, montar roteiros personalizados e evitar perda de tempo durante o passeio.
-Além disso, o projeto incentiva a exploração local do turismo local, ajudando visitantes a aproveitarem a cidade da melhor forma e cntribuindo indiretamente para a valorização de estabelecimentos e pontos turísticos da região. Também promove mais autonomia ao usuário, que passa a depender menos de buscas dispersas na internet e tem tudo centralizado em um só lugar.
+O app busca facilitar o planejamento de visitas, tornando a experiência do público mais prática, organizada e agradável. Com o app, os usuários conseguem descobrir novos lugares, montar roteiros personalizados e evitar perda de tempo durante o passeio.
+Além disso, o projeto incentiva a exploração do turismo local, ajudando visitantes a aproveitarem a cidade da melhor forma e cntribuindo indiretamente para a valorização de estabelecimentos e pontos turísticos da região. Também promove mais autonomia ao usuário, que passa a depender menos de buscas dispersas na internet e tem tudo centralizado em um só lugar.
 
 
 ## :triangular_flag_on_post:	 Principais funcionalidades da aplicação
