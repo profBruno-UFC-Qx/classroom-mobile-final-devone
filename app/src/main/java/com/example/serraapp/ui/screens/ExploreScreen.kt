@@ -15,9 +15,12 @@ import com.example.serraapp.ui.components.SerraTopBar
 import com.example.serraapp.ui.components.WeatherCard
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import com.example.serraapp.model.TouristPlace
 
 @Composable
-fun ExploreScreen(){
+fun ExploreScreen(
+    onPlaceClick: (TouristPlace) -> Unit
+){
     Scaffold(
         topBar = {
             SerraTopBar()
@@ -39,7 +42,10 @@ fun ExploreScreen(){
             }
             items(places){place ->
                 PlaceCard(
-                    place = place
+                    place = place,
+                    onClick = {
+                        onPlaceClick(place)
+                    }
                 )
             }
         }

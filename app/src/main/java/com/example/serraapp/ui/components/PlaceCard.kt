@@ -22,9 +22,11 @@ import androidx.compose.ui.layout.ContentScale
 
 @Composable
 fun PlaceCard(
-    place: TouristPlace
+    place: TouristPlace,
+    onClick: () -> Unit
 ){
     Card(
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
