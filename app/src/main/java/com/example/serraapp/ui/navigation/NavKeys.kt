@@ -10,3 +10,9 @@ data object ExploreKey : NavKey
 data class DetailKey(
     val id: Int
 ) : NavKey
+
+@Serializable
+data object FavoritesKey : NavKey
+
+@Serializable
+data object ProfileKey : NavKey
