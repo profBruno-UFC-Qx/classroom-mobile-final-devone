@@ -13,13 +13,15 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun BottomBar(
+    currentScreen: String,
+
     onExploreClick : () -> Unit,
     onFavoritesClick: () -> Unit,
     onProfileClick: () -> Unit
 ){
     NavigationBar {
         NavigationBarItem(
-            selected = true,
+            selected = currentScreen == "explore",
             onClick = onExploreClick,
 
             icon = {
@@ -33,7 +35,7 @@ fun BottomBar(
             }
         )
         NavigationBarItem(
-            selected = false,
+            selected = currentScreen == "favorites",
             onClick = onFavoritesClick,
 
             icon = {
@@ -47,8 +49,8 @@ fun BottomBar(
             }
         )
         NavigationBarItem(
-            selected = false,
-            onProfileClick,
+            selected = currentScreen == "profile",
+            onClick = onProfileClick,
 
             icon = {
                 Icon(
