@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.example.serraapp.data.places
 import com.example.serraapp.ui.components.BottomBar
+import com.example.serraapp.ui.components.SerraTopBar
 import com.example.serraapp.ui.screens.ExploreScreen
 import com.example.serraapp.ui.screens.DetailScreen
 import com.example.serraapp.ui.screens.FavoritesScreen
@@ -29,6 +30,10 @@ fun Navigation(
     }
 
     Scaffold(
+        topBar = {
+            SerraTopBar()
+        },
+
         bottomBar = {
             BottomBar(
                 currentScreen = currentScreen,
@@ -74,7 +79,13 @@ fun Navigation(
                     )
                 }
                 entry<FavoritesKey>{
-                    FavoritesScreen()
+                    FavoritesScreen(
+                        onPlaceClick = { place ->
+                            backStack.add(
+                                DetailKey(place.id)
+                            )
+                        }
+                    )
                 }
                 entry<ProfileKey>{
                     ProfileScreen()

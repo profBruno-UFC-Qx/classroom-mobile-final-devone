@@ -22,9 +22,6 @@ fun ExploreScreen(
     onPlaceClick: (TouristPlace) -> Unit
 ){
     Scaffold(
-        topBar = {
-            SerraTopBar()
-        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {}
