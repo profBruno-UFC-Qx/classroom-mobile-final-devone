@@ -18,17 +18,18 @@ fun ItineraryScreen(
     onPlaceClick: (TouristPlace) -> Unit
 ){
     Scaffold() { paddingValues ->
-        Column(
+        LazyColumn(
             modifier = Modifier
-                .padding(paddingValues)
-                .padding(16.dp),
+                .padding(paddingValues),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Seus roteiros",
-                style = MaterialTheme.typography.bodyLarge
-            )
+            item {
+                Text(
+                    text = "Seus roteiros",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         }
     }
 }
