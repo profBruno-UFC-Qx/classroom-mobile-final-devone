@@ -16,3 +16,6 @@ data object FavoritesKey : NavKey
 
 @Serializable
 data object ProfileKey : NavKey
+
+@Serializable
+data object ItineraryKey : NavKey

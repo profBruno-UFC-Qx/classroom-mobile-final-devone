@@ -2,6 +2,7 @@ package com.example.serraapp.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.EditCalendar
 import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Person
@@ -17,6 +18,7 @@ fun BottomBar(
 
     onExploreClick : () -> Unit,
     onFavoritesClick: () -> Unit,
+    onItineraryClick: () -> Unit,
     onProfileClick: () -> Unit
 ){
     NavigationBar {
@@ -48,6 +50,22 @@ fun BottomBar(
                 Text("Favoritos")
             }
         )
+        NavigationBarItem(
+            selected = currentScreen == "itinerary",
+            onClick = onItineraryClick,
+
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.EditCalendar,
+
+                    contentDescription = "Roteiro"
+                )
+            },
+            label = {
+                Text("Roteiro")
+            }
+        )
+
         NavigationBarItem(
             selected = currentScreen == "profile",
             onClick = onProfileClick,

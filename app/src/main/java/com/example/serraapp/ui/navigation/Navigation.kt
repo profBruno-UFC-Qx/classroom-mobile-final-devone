@@ -18,6 +18,7 @@ import com.example.serraapp.ui.components.SerraTopBar
 import com.example.serraapp.ui.screens.ExploreScreen
 import com.example.serraapp.ui.screens.DetailScreen
 import com.example.serraapp.ui.screens.FavoritesScreen
+import com.example.serraapp.ui.screens.ItineraryScreen
 import com.example.serraapp.ui.screens.ProfileScreen
 
 @Composable
@@ -46,6 +47,11 @@ fun Navigation(
                     currentScreen = "favorites"
                     backStack.clear()
                     backStack.add(FavoritesKey)
+                },
+                onItineraryClick = {
+                    currentScreen = "itinerary"
+                    backStack.clear()
+                    backStack.add(ItineraryKey)
                 },
                 onProfileClick = {
                     currentScreen  = "profile"
@@ -80,6 +86,15 @@ fun Navigation(
                 }
                 entry<FavoritesKey>{
                     FavoritesScreen(
+                        onPlaceClick = { place ->
+                            backStack.add(
+                                DetailKey(place.id)
+                            )
+                        }
+                    )
+                }
+                entry<ItineraryKey>{
+                    ItineraryScreen(
                         onPlaceClick = { place ->
                             backStack.add(
                                 DetailKey(place.id)
