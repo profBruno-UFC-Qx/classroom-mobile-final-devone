@@ -39,7 +39,7 @@ Além disso, o projeto incentiva a exploração do turismo local, ajudando visit
     - Uso de tema claro/escuro e design responsivo.
 
 ## Descrição da primeira entrega de telas:
-[detalhes-tela.md]
+[./detalhes-tela.md](./detalhes-tela.md)
 
 ---
 
