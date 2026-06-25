@@ -18,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import com.example.serraapp.model.TouristPlace
 import androidx.compose.runtime.remember
@@ -26,18 +27,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serraapp.data.places
+import com.example.serraapp.ui.viewmodel.ItineraryViewModel
 
 @Composable
 fun ItineraryScreen(
     onPlaceClick: (TouristPlace) -> Unit
 ){
-    var nameItinerary by remember {
-        mutableStateOf("")
-    }
-    var checked by remember {
-        mutableStateOf(false)
-    }
+
+    val viewModel: ItineraryViewModel = viewModel()
+    val uiState by viewModel.uiState.collectAsState()
+
     Scaffold { paddingValues ->
         LazyColumn(
             modifier = Modifier
@@ -53,9 +54,9 @@ fun ItineraryScreen(
             }
             item {
                 TextField(
-                    value = nameItinerary,
+                    value = uiState.itineraryName,
                     onValueChange = {
-                        nameItinerary = it
+                        viewModel.updateName(it)
                     },
                     label = {
                         Text("Nome do Roteiro")
@@ -84,9 +85,9 @@ fun ItineraryScreen(
                     ) {
                         Text(place.name)
                         Checkbox(
-                            checked = checked,
+                            checked = place.id in uiState.selectedPlaces,
                             onCheckedChange = {
-                                checked = it
+                                viewModel.togglePlace(place.id)
                             }
                         )
                     }
