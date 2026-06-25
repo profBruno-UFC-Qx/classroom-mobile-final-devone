@@ -19,11 +19,10 @@ fun FavoritesScreen(
 ){
     val favoritePlaces = places.take(2)
 
-    Scaffold() { paddingValues ->
         LazyColumn(
             modifier = Modifier
-                .padding(paddingValues)
                 .padding(16.dp)
+                .padding(5.dp)
         ) {
             item {
                 Text(
@@ -43,5 +42,4 @@ fun FavoritesScreen(
 
             }
         }
-    }
 }

@@ -21,19 +21,7 @@ import com.example.serraapp.model.TouristPlace
 fun ExploreScreen(
     onPlaceClick: (TouristPlace) -> Unit
 ){
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {}
-            ) {
-                Text("+")
-            }
-        }
-    ) { paddingValues ->
-        LazyColumn (
-            modifier = Modifier
-                .padding((paddingValues))
-        ) {
+        LazyColumn () {
             item{
                 WeatherCard()
             }
@@ -46,5 +34,4 @@ fun ExploreScreen(
                 )
             }
         }
-    }
 }
