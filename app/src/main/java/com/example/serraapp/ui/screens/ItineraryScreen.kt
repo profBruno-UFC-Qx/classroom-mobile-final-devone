@@ -2,6 +2,7 @@ package com.example.serraapp.ui.screens
 
 import android.R
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -96,12 +97,38 @@ fun ItineraryScreen(
             item {
                 Spacer(modifier = Modifier.height(24.dp))
                 Button(
-                    onClick = {},
+                    onClick = {
+                        viewModel.saveItinerary()
+                    },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Salvar roteiro")
                 }
             }
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+                Text(
+                    text = "Meus roteiros",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            items(uiState.itineraries){ itineray ->
+                Card() {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            itineray.name,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Text("${itineray.places.size} locais")
+                    }
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.example.serraapp.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.serraapp.data.places
+import com.example.serraapp.model.Itineray
 import com.example.serraapp.ui.state.ItineraryUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,5 +27,24 @@ class ItineraryViewModel : ViewModel() {
                 current + id;
             }
         _uiState.value = _uiState.value.copy(selectedPlaces = updated)
+    }
+
+    fun saveItinerary(){
+        val current = _uiState.value
+
+        val selected = places.filter {
+            it.id in current.selectedPlaces
+        }
+
+        val newItinerary = Itineray(
+            name = current.itineraryName,
+            places = selected
+        )
+
+        _uiState.value = current.copy(
+            itineraries = current.itineraries + newItinerary,
+            itineraryName = "",
+            selectedPlaces = emptySet()
+        )
     }
 }
