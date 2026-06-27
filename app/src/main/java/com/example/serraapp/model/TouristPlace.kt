@@ -5,5 +5,6 @@ data class TouristPlace(
     val name: String,
     val category: String,
     val description: String,
-    val imageRes: Int
+    val imageRes: Int,
+    val isFavorite: Boolean = false
 )

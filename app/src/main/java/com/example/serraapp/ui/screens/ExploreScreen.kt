@@ -30,7 +30,8 @@ fun ExploreScreen(
                     place = place,
                     onClick = {
                         onPlaceClick(place)
-                    }
+                    },
+                    onFavoriteClick = {}
                 )
             }
         }

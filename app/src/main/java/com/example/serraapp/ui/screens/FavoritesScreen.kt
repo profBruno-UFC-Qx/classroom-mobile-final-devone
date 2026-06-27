@@ -41,7 +41,8 @@ fun FavoritesScreen(
                     place = place,
                     onClick = {
                         onPlaceClick(place)
-                    }
+                    },
+                    onFavoriteClick = {}
                 )
 
             }
