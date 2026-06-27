@@ -97,6 +97,7 @@ fun ItineraryScreen(
             item {
                 Spacer(modifier = Modifier.height(24.dp))
                 Button(
+                    enabled = uiState.itineraryName.isNotBlank() && uiState.selectedPlaces.isNotEmpty(),
                     onClick = {
                         viewModel.saveItinerary()
                     },
