@@ -6,17 +6,22 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serraapp.data.places
 import com.example.serraapp.model.TouristPlace
 import com.example.serraapp.ui.components.PlaceCard
+import com.example.serraapp.ui.viewmodel.FavoritesViewModel
 
 @Composable
 fun FavoritesScreen(
     onPlaceClick: (TouristPlace) -> Unit
 ){
-    val favoritePlaces = places.take(2)
+    val viewModel: FavoritesViewModel = viewModel()
+    val uiState by viewModel.uiState.collectAsState()
 
         LazyColumn(
             modifier = Modifier
@@ -31,7 +36,7 @@ fun FavoritesScreen(
                 )
 
             }
-            items(favoritePlaces){ place ->
+            items(uiState.favorites){ place ->
                 PlaceCard(
                     place = place,
                     onClick = {
