@@ -113,17 +113,22 @@ fun ItineraryScreen(
                 )
             }
             items(uiState.itineraries){ itineray ->
-                Card() {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
                     Column(
                         modifier = Modifier.padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            itineray.name,
+                            text = itineray.name,
                             style = MaterialTheme.typography.titleMedium
                         )
-                        Text("${itineray.places.size} locais")
+                        Spacer(modifier = Modifier.height(8.dp))
+                        itineray.places.forEach { place ->
+                            Text("• ${place.name}")
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(10.dp))
