@@ -32,6 +32,8 @@ class ItineraryViewModel : ViewModel() {
     fun saveItinerary(){
         val current = _uiState.value
 
+        if (current.itineraryName.isBlank() || current.selectedPlaces.isEmpty()) return
+
         val selected = places.filter {
             it.id in current.selectedPlaces
         }
