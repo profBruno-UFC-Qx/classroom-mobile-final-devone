@@ -14,13 +14,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serraapp.data.places
 import com.example.serraapp.model.TouristPlace
 import com.example.serraapp.ui.components.PlaceCard
-import com.example.serraapp.ui.viewmodel.FavoritesViewModel
+import com.example.serraapp.ui.viewmodel.PlaceViewModel
 
 @Composable
 fun FavoritesScreen(
     onPlaceClick: (TouristPlace) -> Unit
 ){
-    val viewModel: FavoritesViewModel = viewModel()
+    val viewModel: PlaceViewModel = viewModel()
     val uiState by viewModel.uiState.collectAsState()
 
         LazyColumn(
@@ -36,13 +36,15 @@ fun FavoritesScreen(
                 )
 
             }
-            items(uiState.favorites){ place ->
+            items(uiState.places.filter { it.isFavorite }){ place ->
                 PlaceCard(
                     place = place,
                     onClick = {
                         onPlaceClick(place)
                     },
-                    onFavoriteClick = {}
+                    onFavoriteClick = {
+                        viewModel.toggleFavorite(place.id)
+                    }
                 )
 
             }

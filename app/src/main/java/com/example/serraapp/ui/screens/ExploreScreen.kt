@@ -15,23 +15,32 @@ import com.example.serraapp.ui.components.SerraTopBar
 import com.example.serraapp.ui.components.WeatherCard
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serraapp.model.TouristPlace
+import com.example.serraapp.ui.viewmodel.PlaceViewModel
 
 @Composable
 fun ExploreScreen(
     onPlaceClick: (TouristPlace) -> Unit
 ){
+    val viewModel: PlaceViewModel = viewModel()
+    val uiState by viewModel.uiState.collectAsState()
+
         LazyColumn () {
             item{
                 WeatherCard()
             }
-            items(places){place ->
+            items(uiState.places){place ->
                 PlaceCard(
                     place = place,
                     onClick = {
                         onPlaceClick(place)
                     },
-                    onFavoriteClick = {}
+                    onFavoriteClick = {
+                        viewModel.toggleFavorite(place.id)
+                    }
                 )
             }
         }
