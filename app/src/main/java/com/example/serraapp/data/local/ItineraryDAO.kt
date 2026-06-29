@@ -11,8 +11,8 @@ interface ItineraryDAO {
     @Insert
     suspend fun insertItinerary(itineraryEntity: ItineraryEntity): Long
 
-    @Delete
-    suspend fun deleteItinerary(itineraryEntity: ItineraryEntity)
+    @Query("DELETE FROM itineraries WHERE id = :id")
+    suspend fun deleteItinerary(id: Int)
 
     @Query("SELECT * FROM itineraries")
     fun getItineraries(): Flow<List<ItineraryEntity>>

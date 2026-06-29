@@ -14,7 +14,7 @@ class ItineraryRepository(
         return itineraryDAO.insertItinerary(itineraryEntity)
     }
 
-    suspend fun deleteItinerary(itineraryEntity: ItineraryEntity){
-        itineraryDAO.deleteItinerary(itineraryEntity)
+    suspend fun deleteItinerary(id: Int){
+        itineraryDAO.deleteItinerary(id)
     }
 }

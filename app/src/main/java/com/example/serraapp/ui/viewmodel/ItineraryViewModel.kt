@@ -47,11 +47,11 @@ class ItineraryViewModel(
 
         if (current.itineraryName.isBlank() || current.selectedPlaces.isEmpty()) return
 
-            viewModelScope.launch {
-                val itineraryId = repository.insertItinerary(
-                    ItineraryEntity(
-                        name = current.itineraryName
-                    )
+        viewModelScope.launch {
+            val itineraryId = repository.insertItinerary(
+                ItineraryEntity(
+                    name = current.itineraryName
+                )
                 ).toInt()
 
                 current.selectedPlaces.forEach { placeId ->
@@ -70,6 +70,16 @@ class ItineraryViewModel(
         )
     }
 
+    fun deleteItinerary(itineraryId: Int){
+        viewModelScope.launch {
+            itineraryPlaceRepository.deleteByItinerary(itineraryId)
+
+            repository.deleteItinerary(itineraryId)
+
+            loadItineraries()
+        }
+    }
+
     private fun loadItineraries(){
         viewModelScope.launch {
             repository.getItineraries().collect { itineraries ->
@@ -84,6 +94,7 @@ class ItineraryViewModel(
                     }
 
                     Itinerary(
+                        id = itinerary.id,
                         name = itinerary.name,
                         places = selectedPlaces
                     )
