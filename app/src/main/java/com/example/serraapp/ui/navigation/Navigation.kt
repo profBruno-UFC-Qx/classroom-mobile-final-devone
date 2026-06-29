@@ -14,7 +14,11 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.serraapp.data.local.DatabaseProvider
 import com.example.serraapp.data.places
+import com.example.serraapp.repository.FavoriteRepository
 import com.example.serraapp.ui.components.BottomBar
 import com.example.serraapp.ui.components.SerraTopBar
 import com.example.serraapp.ui.screens.ExploreScreen
@@ -22,6 +26,8 @@ import com.example.serraapp.ui.screens.DetailScreen
 import com.example.serraapp.ui.screens.FavoritesScreen
 import com.example.serraapp.ui.screens.ItineraryScreen
 import com.example.serraapp.ui.screens.ProfileScreen
+import com.example.serraapp.ui.viewmodel.FavoriteViewModelFactory
+import com.example.serraapp.ui.viewmodel.FavoritesViewModel
 
 @Composable
 fun Navigation(
@@ -31,6 +37,13 @@ fun Navigation(
     var currentScreen by remember {
         mutableStateOf("explore")
     }
+
+    val context = LocalContext.current
+    val database = DatabaseProvider.getDatabase(context)
+    val repository = FavoriteRepository(database.favoriteDAO())
+    val favoritesViewModel: FavoritesViewModel = viewModel(
+        factory = FavoriteViewModelFactory(repository)
+    )
 
     Scaffold(
         topBar = {
@@ -77,6 +90,7 @@ fun Navigation(
             entryProvider = entryProvider {
                 entry<ExploreKey>{
                     ExploreScreen(
+                        favoritesViewModel = favoritesViewModel,
                         onPlaceClick = { place ->
                             backStack.add(
                                 DetailKey(place.id)
@@ -97,6 +111,7 @@ fun Navigation(
                 }
                 entry<FavoritesKey>{
                     FavoritesScreen(
+                        favoritesViewModel = favoritesViewModel,
                         onPlaceClick = { place ->
                             backStack.add(
                                 DetailKey(place.id)

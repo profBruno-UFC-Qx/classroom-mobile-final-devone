@@ -18,28 +18,39 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.serraapp.data.local.FavoriteEntity
 import com.example.serraapp.model.TouristPlace
+import com.example.serraapp.ui.viewmodel.FavoritesViewModel
 import com.example.serraapp.ui.viewmodel.PlaceViewModel
 
 @Composable
 fun ExploreScreen(
+    favoritesViewModel: FavoritesViewModel,
     onPlaceClick: (TouristPlace) -> Unit
 ){
-    val viewModel: PlaceViewModel = viewModel()
-    val uiState by viewModel.uiState.collectAsState()
+    val placeViewModel: PlaceViewModel = viewModel()
+    val placeUiState by placeViewModel.uiState.collectAsState()
+    val favoritesUiState by favoritesViewModel.uiState.collectAsState()
 
         LazyColumn () {
             item{
                 WeatherCard()
             }
-            items(uiState.places){place ->
+            items(placeUiState.places){place ->
                 PlaceCard(
                     place = place,
+                    isFavorite = favoritesUiState.favorites.any {
+                        it.id == place.id
+                    },
                     onClick = {
                         onPlaceClick(place)
                     },
                     onFavoriteClick = {
-                        viewModel.toggleFavorite(place.id)
+                        if (favoritesUiState.favorites.any { it.id == place.id }){
+                            favoritesViewModel.removeFavorite(FavoriteEntity(place.id))
+                        } else {
+                            favoritesViewModel.insertFavorite(FavoriteEntity(place.id))
+                        }
                     }
                 )
             }

@@ -30,6 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 @Composable
 fun PlaceCard(
     place: TouristPlace,
+    isFavorite: Boolean,
     onClick: () -> Unit,
     onFavoriteClick: () -> Unit
 ){
@@ -69,7 +70,7 @@ fun PlaceCard(
                         onClick = onFavoriteClick
                     ) {
                         Icon(
-                            imageVector = if (place.isFavorite) Icons.Default.Favorite
+                            imageVector = if (isFavorite) Icons.Default.Favorite
                                             else Icons.Default.FavoriteBorder,
                             contentDescription = "Favorito"
                         )
