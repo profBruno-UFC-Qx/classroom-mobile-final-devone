@@ -1,17 +1,27 @@
 package com.example.serraapp.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.serraapp.data.local.ItineraryEntity
 import com.example.serraapp.data.places
-import com.example.serraapp.model.Itineray
+import com.example.serraapp.model.Itinerary
+import com.example.serraapp.repository.ItineraryRepository
 import com.example.serraapp.ui.state.ItineraryUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
-class ItineraryViewModel : ViewModel() {
+class ItineraryViewModel(
+    private val repository: ItineraryRepository
+) : ViewModel() {
     private val _uiState = MutableStateFlow(ItineraryUIState())
 
     val uiState: StateFlow<ItineraryUIState> = _uiState.asStateFlow()
+
+    init {
+        loadItineraries()
+    }
 
     fun updateName(name: String){
         _uiState.value = _uiState.value.copy(itineraryName = name)
@@ -24,7 +34,7 @@ class ItineraryViewModel : ViewModel() {
             if (current.contains(id)){
                 current - id
             }else {
-                current + id;
+                current + id
             }
         _uiState.value = _uiState.value.copy(selectedPlaces = updated)
     }
@@ -34,19 +44,35 @@ class ItineraryViewModel : ViewModel() {
 
         if (current.itineraryName.isBlank() || current.selectedPlaces.isEmpty()) return
 
-        val selected = places.filter {
-            it.id in current.selectedPlaces
-        }
-
-        val newItinerary = Itineray(
-            name = current.itineraryName,
-            places = selected
-        )
+            viewModelScope.launch {
+                repository.insertItinerary(
+                    ItineraryEntity(
+                        name = current.itineraryName
+                    )
+                )
+            }
 
         _uiState.value = current.copy(
-            itineraries = current.itineraries + newItinerary,
             itineraryName = "",
             selectedPlaces = emptySet()
         )
+    }
+
+    private fun loadItineraries(){
+        viewModelScope.launch {
+            repository.getItineraries().collect { itineraries ->
+                val itineraryList = itineraries.map { itinerary ->
+
+                    Itinerary(
+                        name = itinerary.name,
+                        places = emptyList()
+                    )
+                }
+
+                _uiState.value = _uiState.value.copy(
+                    itineraries = itineraryList
+                )
+            }
+        }
     }
 }

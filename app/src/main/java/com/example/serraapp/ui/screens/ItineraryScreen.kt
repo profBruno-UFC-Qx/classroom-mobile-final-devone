@@ -38,11 +38,11 @@ import com.example.serraapp.ui.viewmodel.ItineraryViewModel
 
 @Composable
 fun ItineraryScreen(
+    itineraryViewModel: ItineraryViewModel,
     onPlaceClick: (TouristPlace) -> Unit
 ){
 
-    val viewModel: ItineraryViewModel = viewModel()
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by itineraryViewModel.uiState.collectAsState()
 
     Scaffold { paddingValues ->
         LazyColumn(
@@ -72,7 +72,7 @@ fun ItineraryScreen(
                 TextField(
                     value = uiState.itineraryName,
                     onValueChange = {
-                        viewModel.updateName(it)
+                        itineraryViewModel.updateName(it)
                     },
                     label = {
                         Text("Nome do Roteiro")
@@ -103,7 +103,7 @@ fun ItineraryScreen(
                         Checkbox(
                             checked = place.id in uiState.selectedPlaces,
                             onCheckedChange = {
-                                viewModel.togglePlace(place.id)
+                                itineraryViewModel.togglePlace(place.id)
                             }
                         )
                     }
@@ -118,7 +118,7 @@ fun ItineraryScreen(
                 Button(
                     enabled = uiState.itineraryName.isNotBlank() && uiState.selectedPlaces.isNotEmpty(),
                     onClick = {
-                        viewModel.saveItinerary()
+                        itineraryViewModel.saveItinerary()
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -132,7 +132,7 @@ fun ItineraryScreen(
                     style = MaterialTheme.typography.titleMedium
                 )
             }
-            items(uiState.itineraries){ itineray ->
+            items(uiState.itineraries){ itinerary ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -142,11 +142,11 @@ fun ItineraryScreen(
                         modifier = Modifier.padding(16.dp),
                     ) {
                         Text(
-                            text = itineray.name,
+                            text = itinerary.name,
                             style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        itineray.places.forEach { place ->
+                        itinerary.places.forEach { place ->
                             Text("• ${place.name}")
                         }
                     }

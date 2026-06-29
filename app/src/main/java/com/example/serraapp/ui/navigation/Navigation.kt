@@ -19,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serraapp.data.local.DatabaseProvider
 import com.example.serraapp.data.places
 import com.example.serraapp.repository.FavoriteRepository
+import com.example.serraapp.repository.ItineraryRepository
 import com.example.serraapp.ui.components.BottomBar
 import com.example.serraapp.ui.components.SerraTopBar
 import com.example.serraapp.ui.screens.ExploreScreen
@@ -28,6 +29,8 @@ import com.example.serraapp.ui.screens.ItineraryScreen
 import com.example.serraapp.ui.screens.ProfileScreen
 import com.example.serraapp.ui.viewmodel.FavoriteViewModelFactory
 import com.example.serraapp.ui.viewmodel.FavoritesViewModel
+import com.example.serraapp.ui.viewmodel.ItineraryViewModel
+import com.example.serraapp.ui.viewmodel.ItineraryViewModelFactory
 
 @Composable
 fun Navigation(
@@ -43,6 +46,10 @@ fun Navigation(
     val repository = FavoriteRepository(database.favoriteDAO())
     val favoritesViewModel: FavoritesViewModel = viewModel(
         factory = FavoriteViewModelFactory(repository)
+    )
+    val itineraryRepository = ItineraryRepository(database.ItineraryDAO())
+    val itineraryViewModel: ItineraryViewModel = viewModel(
+        factory = ItineraryViewModelFactory(itineraryRepository)
     )
 
     Scaffold(
@@ -121,6 +128,7 @@ fun Navigation(
                 }
                 entry<ItineraryKey>{
                     ItineraryScreen(
+                        itineraryViewModel = itineraryViewModel,
                         onPlaceClick = { place ->
                             backStack.add(
                                 DetailKey(place.id)
