@@ -6,14 +6,17 @@ import androidx.room.RoomDatabase
 @Database(
     entities = [
         FavoriteEntity::class,
-        ItineraryEntity::class
+        ItineraryEntity::class,
+        ItineraryPlaceEntity::class
                ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 
 abstract class AppDatabase : RoomDatabase(){
     abstract fun favoriteDAO() : FavoriteDAO
 
-    abstract fun ItineraryDAO(): ItineraryDAO
+    abstract fun itineraryDAO(): ItineraryDAO
+
+    abstract fun itineraryPlaceDAO(): ItineraryPlaceDAO
 }

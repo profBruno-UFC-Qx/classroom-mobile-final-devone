@@ -3,8 +3,10 @@ package com.example.serraapp.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.serraapp.data.local.ItineraryEntity
+import com.example.serraapp.data.local.ItineraryPlaceEntity
 import com.example.serraapp.data.places
 import com.example.serraapp.model.Itinerary
+import com.example.serraapp.repository.ItineraryPlaceRepository
 import com.example.serraapp.repository.ItineraryRepository
 import com.example.serraapp.ui.state.ItineraryUIState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +15,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ItineraryViewModel(
-    private val repository: ItineraryRepository
+    private val repository: ItineraryRepository,
+    private val itineraryPlaceRepository: ItineraryPlaceRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ItineraryUIState())
 
@@ -45,11 +48,20 @@ class ItineraryViewModel(
         if (current.itineraryName.isBlank() || current.selectedPlaces.isEmpty()) return
 
             viewModelScope.launch {
-                repository.insertItinerary(
+                val itineraryId = repository.insertItinerary(
                     ItineraryEntity(
                         name = current.itineraryName
                     )
-                )
+                ).toInt()
+
+                current.selectedPlaces.forEach { placeId ->
+                    itineraryPlaceRepository.insert(
+                        ItineraryPlaceEntity(
+                            itineraryId = itineraryId,
+                            placeId = placeId
+                        )
+                    )
+                }
             }
 
         _uiState.value = current.copy(
@@ -63,9 +75,17 @@ class ItineraryViewModel(
             repository.getItineraries().collect { itineraries ->
                 val itineraryList = itineraries.map { itinerary ->
 
+                    val placeRelations = itineraryPlaceRepository.getPlacesFromItinerary(itinerary.id)
+
+                    val selectedPlaces = places.filter { place ->
+                        placeRelations.any{ relation ->
+                            relation.placeId == place.id
+                        }
+                    }
+
                     Itinerary(
                         name = itinerary.name,
-                        places = emptyList()
+                        places = selectedPlaces
                     )
                 }
 

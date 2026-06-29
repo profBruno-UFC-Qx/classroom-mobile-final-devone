@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ItineraryDAO {
     @Insert
-    suspend fun insertItinerary(itineraryEntity: ItineraryEntity)
+    suspend fun insertItinerary(itineraryEntity: ItineraryEntity): Long
 
     @Delete
     suspend fun deleteItinerary(itineraryEntity: ItineraryEntity)
 
-    @Query("SELECT * FROM itineraties")
+    @Query("SELECT * FROM itineraries")
     fun getItineraries(): Flow<List<ItineraryEntity>>
 }

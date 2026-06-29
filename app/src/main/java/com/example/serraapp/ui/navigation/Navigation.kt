@@ -19,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serraapp.data.local.DatabaseProvider
 import com.example.serraapp.data.places
 import com.example.serraapp.repository.FavoriteRepository
+import com.example.serraapp.repository.ItineraryPlaceRepository
 import com.example.serraapp.repository.ItineraryRepository
 import com.example.serraapp.ui.components.BottomBar
 import com.example.serraapp.ui.components.SerraTopBar
@@ -47,9 +48,10 @@ fun Navigation(
     val favoritesViewModel: FavoritesViewModel = viewModel(
         factory = FavoriteViewModelFactory(repository)
     )
-    val itineraryRepository = ItineraryRepository(database.ItineraryDAO())
+    val itineraryRepository = ItineraryRepository(database.itineraryDAO())
+    val itineraryPlaceRepository = ItineraryPlaceRepository(database.itineraryPlaceDAO())
     val itineraryViewModel: ItineraryViewModel = viewModel(
-        factory = ItineraryViewModelFactory(itineraryRepository)
+        factory = ItineraryViewModelFactory(itineraryRepository, itineraryPlaceRepository)
     )
 
     Scaffold(
