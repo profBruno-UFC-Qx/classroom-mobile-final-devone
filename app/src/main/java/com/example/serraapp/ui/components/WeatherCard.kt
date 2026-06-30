@@ -17,7 +17,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 
 @Composable
-fun WeatherCard(){
+fun WeatherCard(
+    city: String,
+    temp: Double,
+    description: String
+){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,17 +35,17 @@ fun WeatherCard(){
         ){
             Column {
                 Text(
-                    text = "Guaramiranga, CE",
+                    text = city,
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    text = "Clima agradável",
+                    text = description,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
             Column{
                 Text(
-                    text = "18°C",
+                    text = "${temp.toInt()} ° C",
                     style = MaterialTheme.typography.headlineMedium
                 )
                 Icon(

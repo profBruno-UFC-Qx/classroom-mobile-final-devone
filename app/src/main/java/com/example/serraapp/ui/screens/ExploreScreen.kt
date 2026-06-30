@@ -15,13 +15,20 @@ import com.example.serraapp.ui.components.SerraTopBar
 import com.example.serraapp.ui.components.WeatherCard
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serraapp.data.local.FavoriteEntity
 import com.example.serraapp.model.TouristPlace
+import com.example.serraapp.network.KtorClient
+import com.example.serraapp.network.WeatherService
+import com.example.serraapp.repository.WeatherRepository
 import com.example.serraapp.ui.viewmodel.FavoritesViewModel
 import com.example.serraapp.ui.viewmodel.PlaceViewModel
+import com.example.serraapp.ui.viewmodel.WeatherViewModel
+import com.example.serraapp.ui.viewmodel.WeatherViewModelFactory
 
 @Composable
 fun ExploreScreen(
@@ -30,11 +37,30 @@ fun ExploreScreen(
 ){
     val placeViewModel: PlaceViewModel = viewModel()
     val placeUiState by placeViewModel.uiState.collectAsState()
+
     val favoritesUiState by favoritesViewModel.uiState.collectAsState()
 
-        LazyColumn () {
+    val repository = remember {
+        WeatherRepository(WeatherService(KtorClient.api))
+    }
+
+    val weatherViewModel: WeatherViewModel = viewModel(
+        factory = WeatherViewModelFactory(repository)
+    )
+
+    val temp by weatherViewModel.temp.collectAsState()
+    val desc by weatherViewModel.desc.collectAsState()
+
+    LaunchedEffect(Unit) {
+        weatherViewModel.loadWeather("Guaramiranga")
+    }
+    LazyColumn () {
             item{
-                WeatherCard()
+                WeatherCard(
+                    city = "Guaramiranga, CE",
+                    temp = temp ?: 0.0,
+                    description = desc.ifBlank{ "Carregando..." }
+                )
             }
             items(placeUiState.places){place ->
                 PlaceCard(
